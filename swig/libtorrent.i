@@ -1223,8 +1223,13 @@ namespace libtorrent {
 
 %extend read_piece_alert {
 
-    int64_t buffer_ptr() {
-        return reinterpret_cast<int64_t>($self->buffer.get());
+    std::vector<int8_t> buffer() {
+        if ($self->ec) {
+          return return std::vector<int8_t>();
+        } else {
+          boost::shared_array<char> arr = $self->buffer;
+          return std::vector<int8_t>(arr.get(), arr.get() + $self->size);
+        }
     }
 }
 

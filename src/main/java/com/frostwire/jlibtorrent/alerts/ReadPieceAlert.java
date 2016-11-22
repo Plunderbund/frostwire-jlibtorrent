@@ -1,7 +1,11 @@
 package com.frostwire.jlibtorrent.alerts;
 
 import com.frostwire.jlibtorrent.ErrorCode;
+import com.frostwire.jlibtorrent.Vectors;
+import com.frostwire.jlibtorrent.swig.byte_vector;
 import com.frostwire.jlibtorrent.swig.read_piece_alert;
+
+import static com.frostwire.jlibtorrent.swig.libtorrent.ed25519_create_seed;
 
 /**
  * This alert is posted when the asynchronous read operation initiated by
@@ -31,10 +35,10 @@ public final class ReadPieceAlert extends TorrentAlert<read_piece_alert> {
     }
 
     /**
-     * @return the native buffer pointer
+     * @return
      */
-    public long bufferPtr() {
-        return alert.buffer_ptr();
+    public byte[] buffer() {
+        return Vectors.byte_vector2bytes(alert.buffer());
     }
 
     /**
