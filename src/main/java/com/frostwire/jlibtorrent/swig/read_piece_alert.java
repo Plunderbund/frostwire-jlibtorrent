@@ -64,8 +64,8 @@ public class read_piece_alert extends torrent_alert {
     return libtorrent_jni.read_piece_alert_size_get(swigCPtr, this);
   }
 
-  public long buffer_ptr() {
-    return libtorrent_jni.read_piece_alert_buffer_ptr(swigCPtr, this);
+  public byte_vector data() {
+    return new byte_vector(libtorrent_jni.read_piece_alert_data(swigCPtr, this), true);
   }
 
   public final static int priority = libtorrent_jni.read_piece_alert_priority_get();

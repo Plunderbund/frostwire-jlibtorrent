@@ -1152,7 +1152,7 @@ public class libtorrent_jni {
   public final static native long read_piece_alert_error_get(long jarg1, read_piece_alert jarg1_);
   public final static native int read_piece_alert_piece_get(long jarg1, read_piece_alert jarg1_);
   public final static native int read_piece_alert_size_get(long jarg1, read_piece_alert jarg1_);
-  public final static native long read_piece_alert_buffer_ptr(long jarg1, read_piece_alert jarg1_);
+  public final static native long read_piece_alert_data(long jarg1, read_piece_alert jarg1_);
   public final static native void delete_read_piece_alert(long jarg1);
   public final static native int file_completed_alert_priority_get();
   public final static native int file_completed_alert_alert_type_get();

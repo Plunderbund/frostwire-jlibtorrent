@@ -37,8 +37,8 @@ public final class ReadPieceAlert extends TorrentAlert<read_piece_alert> {
     /**
      * @return
      */
-    public byte[] buffer() {
-        return Vectors.byte_vector2bytes(alert.buffer());
+    public byte[] data() {
+        return Vectors.byte_vector2bytes(alert.data());
     }
 
     /**

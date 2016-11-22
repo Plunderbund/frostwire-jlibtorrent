@@ -1223,7 +1223,7 @@ namespace libtorrent {
 
 %extend read_piece_alert {
 
-    std::vector<int8_t> buffer() {
+    std::vector<int8_t> data() {
         if ($self->ec) {
           return return std::vector<int8_t>();
         } else {

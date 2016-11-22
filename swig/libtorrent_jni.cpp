@@ -1469,8 +1469,13 @@ SWIGINTERN libtorrent::session_error_alert const *libtorrent_alert_cast_to_sessi
 SWIGINTERN int64_t libtorrent_alert_get_timestamp(libtorrent::alert *self){
         return libtorrent::total_milliseconds(self->timestamp().time_since_epoch());
     }
-SWIGINTERN int64_t libtorrent_read_piece_alert_buffer_ptr(libtorrent::read_piece_alert *self){
-        return reinterpret_cast<int64_t>(self->buffer.get());
+SWIGINTERN std::vector< int8_t > libtorrent_read_piece_alert_data(libtorrent::read_piece_alert *self){
+        if (self->ec) {
+          return return std::vector<int8_t>();
+        } else {
+          boost::shared_array<char> arr = self->buffer;
+          return std::vector<int8_t>(arr.get(), arr.get() + self->size);
+        }
     }
 SWIGINTERN std::string libtorrent_storage_moved_failed_alert_get_operation(libtorrent::storage_moved_failed_alert *self){
         return std::string(self->operation);
@@ -28409,10 +28414,10 @@ SWIGEXPORT jint JNICALL Java_com_frostwire_jlibtorrent_swig_libtorrent_1jni_read
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_frostwire_jlibtorrent_swig_libtorrent_1jni_read_1piece_1alert_1buffer_1ptr(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jlong JNICALL Java_com_frostwire_jlibtorrent_swig_libtorrent_1jni_read_1piece_1alert_1data(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   libtorrent::read_piece_alert *arg1 = (libtorrent::read_piece_alert *) 0 ;
-  int64_t result;
+  std::vector< int8_t > result;
   
   (void)jenv;
   (void)jcls;
@@ -28420,7 +28425,7 @@ SWIGEXPORT jlong JNICALL Java_com_frostwire_jlibtorrent_swig_libtorrent_1jni_rea
   arg1 = *(libtorrent::read_piece_alert **)&jarg1; 
   {
     try {
-      result = (int64_t)libtorrent_read_piece_alert_buffer_ptr(arg1);
+      result = libtorrent_read_piece_alert_data(arg1);
     } catch (std::exception& e) {
       SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, e.what());
       return 0;
@@ -28429,7 +28434,7 @@ SWIGEXPORT jlong JNICALL Java_com_frostwire_jlibtorrent_swig_libtorrent_1jni_rea
       return 0;
     }
   }
-  jresult = (jlong)result; 
+  *(std::vector< int8_t > **)&jresult = new std::vector< int8_t >((const std::vector< int8_t > &)result); 
   return jresult;
 }
 
