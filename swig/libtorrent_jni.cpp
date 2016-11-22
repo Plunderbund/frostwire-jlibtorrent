@@ -1470,11 +1470,11 @@ SWIGINTERN int64_t libtorrent_alert_get_timestamp(libtorrent::alert *self){
         return libtorrent::total_milliseconds(self->timestamp().time_since_epoch());
     }
 SWIGINTERN std::vector< int8_t > libtorrent_read_piece_alert_data(libtorrent::read_piece_alert *self){
-        if (self->ec) {
-          return return std::vector<int8_t>();
-        } else {
+        if (self->buffer) {
           boost::shared_array<char> arr = self->buffer;
           return std::vector<int8_t>(arr.get(), arr.get() + self->size);
+        } else {
+          return std::vector<int8_t>();
         }
     }
 SWIGINTERN std::string libtorrent_storage_moved_failed_alert_get_operation(libtorrent::storage_moved_failed_alert *self){
